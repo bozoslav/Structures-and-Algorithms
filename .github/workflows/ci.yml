@@ -27,6 +27,6 @@ jobs:
       - name: Configure
         run: cmake --preset debug -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}
       - name: Build test executable
-        run: cmake --build --preset debug --target slot_map_tests --parallel
+        run: cmake --build --preset debug --target slot_map_tests spsc_ring_buffer_tests --parallel
       - name: Test
         run: ctest --preset debug
