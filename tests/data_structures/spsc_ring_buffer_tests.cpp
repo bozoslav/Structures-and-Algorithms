@@ -23,6 +23,7 @@ void check(bool condition, const char* expression, int line) {
 void test_new_buffer_is_empty() {
     saa::SpscRingBuffer<int> buffer(3);
 
+    CHECK(buffer.getCapacity() == 4);
     CHECK(!buffer.pop().has_value());
 }
 
@@ -52,25 +53,29 @@ void test_values_are_popped_in_fifo_order() {
 }
 
 void test_buffer_wraps_around_and_reuses_freed_slots() {
-    saa::SpscRingBuffer<int> buffer(3);
+    saa::SpscRingBuffer<int> buffer(4);
 
     CHECK(buffer.push(1));
     CHECK(buffer.push(2));
     CHECK(buffer.push(3));
+    CHECK(buffer.push(4));
+    CHECK(!buffer.push(5));
 
     const auto first = buffer.pop();
     CHECK(first == 1);
 
-    CHECK(buffer.push(4));
-    CHECK(!buffer.push(5));
+    CHECK(buffer.push(5));
+    CHECK(!buffer.push(6));
 
     const auto second = buffer.pop();
     const auto third = buffer.pop();
     const auto fourth = buffer.pop();
+    const auto fifth = buffer.pop();
 
     CHECK(second == 2);
     CHECK(third == 3);
     CHECK(fourth == 4);
+    CHECK(fifth == 5);
     CHECK(!buffer.pop().has_value());
 }
 
