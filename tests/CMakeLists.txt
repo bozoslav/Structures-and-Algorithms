@@ -11,3 +11,8 @@ add_executable(spsc_ring_buffer_tests
 )
 target_link_libraries(spsc_ring_buffer_tests PRIVATE saa::saa Threads::Threads)
 add_test(NAME spsc_ring_buffer_tests COMMAND spsc_ring_buffer_tests)
+
+add_executable(segtree_tests data_structures/segtree_tests.cpp)
+target_link_libraries(segtree_tests PRIVATE saa::saa)
+add_test(NAME segtree_tests COMMAND segtree_tests)
+set_tests_properties(segtree_tests PROPERTIES TIMEOUT 5)

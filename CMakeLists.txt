@@ -4,7 +4,8 @@ project(structures_and_algorithms VERSION 0.1.0 LANGUAGES CXX)
 option(SAA_BUILD_EXAMPLES "Build example programs" ON)
 option(SAA_BUILD_BENCHMARKS "Build Google Benchmark programs" OFF)
 
-add_library(saa INTERFACE)
+add_library(saa INTERFACE
+        include/saa/data_structures/segtree.hpp)
 add_library(saa::saa ALIAS saa)
 target_include_directories(saa INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
